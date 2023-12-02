@@ -1,7 +1,9 @@
 Ayman Muhammad Abubaker
 ==================
 Teminal commandline :-
-npm run dev
+"for tailwindcss run" => npx tailwindcss -i ./public/css/input.css -o ./public/css/main.css --watch 
+"system": npm start
+
 ==================
 
 Database name: BlogDb
@@ -10,6 +12,24 @@ Tables name:
     posts
 
 
+تم إضافة اجراءات الدخول والخروج باستخدام
+jwt
+bcrypt
+session
+
+ايضا عدم السماح لغير المصرح لهم بالدخول لجزء معين وهي صفحة ال 
+dashboard
+add-post
+edit-post
+delete-post
+الا بعد الدخول بالبيانات المسجلة والتحقق من المستخدم
+بالنسبة للحدف استخدمت حقل لحالة المنشور وتعديله
+from true to false
+واضهار فقط المناشير التي تحمل حالة true
+والحفاظ على المناشير التي تحمل حالة flase 
+في قاعدة البيانات للرجوع لها في وقت لاحق 
+
+تم استخدام prisma ORM
 
 
 
