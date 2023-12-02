@@ -1,0 +1,79 @@
+<section class="mb-32 text-left">
+  <div class="flex justify-between mb-4">
+    <div class="flex justify-start items-center">
+      <h2 class="text-2xl font-bold">Posts</h2>
+    </div>
+    <div class="flex justify-end items-center">
+      <a href="#" class="font-bold">+ New Post</a>
+    </div>
+  </div>
+  <div class="mb-6 flex flex-wrap">
+    <div
+      class="mb-6 ml-auto w-full shrink-0 grow-0 basis-auto px-3 md:mb-0 md:w-3/12"
+    >
+      <div
+        id="app"
+        class="relative mb-6 bg-white shadow-lg dark:shadow-black/20 w-128 h-48 rounded-lg flex card text-grey-darkest"
+      >
+        <a href="#">
+          <img
+            class="w-full h-full rounded-l-lg"
+            src="https://mdbcdn.b-cdn.net/img/new/standard/city/018.jpg"
+            alt="Room Image"
+          />
+        </a>
+        <div class="w-full flex flex-col">
+          <div class="p-4 pb-4 flex-1">
+            <h3 class="text-3xl font-medium mb-1 text-gray-950">Blog title</h3>
+            <div class="text-2xl flex items-center my-4">Blog Content</div>
+            <div class="text-lg mt-6 text-grey-darkest justify-between">
+              pulished: date
+            </div>
+          </div>
+          <!-- <div
+            class="bg-grey-lighter p-3 flex items-center justify-between transition duration-200 ease-in-out hover:bg-grey-light"
+          >
+            Book Now
+            <i class="fas fa-chevron-right"></i>
+          </div> -->
+        </div>
+        <div class="inline-block items-center">
+          <a
+            href="/books/edit-book/1?edit=true"
+            class="inline-block items-center mt-12 ml-2 rounded-full bg-blue-500 px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-blue-800 hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:outline-none focus:ring-0 active:bg-blue-700 active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(220,76,100,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)]"
+            >Edit</a
+          >
+          <form action="/books/book/delete-book" method="POST">
+            <input type="hidden" value="1" name="bookId" />
+            <button
+              class="inline-block items-center mt-4 mr-8 rounded-full bg-blue-500 px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-blue-800 hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:outline-none focus:ring-0 active:bg-blue-700 active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(220,76,100,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)]"
+              type="submit"
+            >
+              Delete
+            </button>
+          </form>
+        </div>
+        <!-- <div class="flex justify-between mb-4">
+          <div class="flex justify-start items-center">
+            <a
+              href="/books/edit-book/1?edit=true"
+              class="btn inline-block mx-2 rounded-full bg-blue-600 px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-blue-800 hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:outline-none focus:ring-0 active:bg-blue-700 active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(220,76,100,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)]"
+              >Edit</a
+            >
+          </div>
+          <div class="flex justify-end items-center">
+            <form action="/books/book/delete-book" method="POST">
+              <input type="hidden" value="1" name="bookId" />
+              <button
+                class="btn inline-block mx-2 rounded-full bg-blue-600 px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-blue-800 hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:outline-none focus:ring-0 active:bg-blue-700 active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(220,76,100,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)]"
+                type="submit"
+              >
+                Delete
+              </button>
+            </form>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>

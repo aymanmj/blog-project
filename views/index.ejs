@@ -1,0 +1,102 @@
+<!-- Section: Design Block -->
+<section class="mb-40">
+  <!-- SVG Background -->
+
+  <!-- Jumbotron -->
+
+  <div class="grid items-center gap-12 lg:grid-cols-2">
+    <div class="mt-12 lg:mt-0">
+      <h1
+        class="mb-16 text-4xl font-bold tracking-tight md:text-5xl xl:text-6xl"
+      >
+        Hi, I am Ayman<br /><span class="text-blue-600">Web developer</span>
+      </h1>
+      <!-- <a
+        class="mb-2 inline-block rounded bg-primary px-12 pt-4 pb-3.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] md:mr-2 md:mb-0"
+        data-te-ripple-init
+        data-te-ripple-color="light"
+        href="#!"
+        role="button"
+        >Get started</a
+      >
+      <a
+        class="inline-block rounded px-12 pt-4 pb-3.5 text-sm font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:bg-neutral-500 hover:bg-opacity-10 hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:hover:bg-neutral-700 dark:hover:bg-opacity-60"
+        data-te-ripple-init
+        data-te-ripple-color="light"
+        href="#!"
+        role="button"
+        >Learn more</a
+      > -->
+    </div>
+    <div class="mb-16">
+      <img
+        src="https://tecdn.b-cdn.net/img/new/standard/city/017.jpg"
+        class="w-full h-60 rounded-lg shadow-lg dark:shadow-black/20"
+        alt=""
+      />
+    </div>
+  </div>
+
+  <!-- Jumbotron -->
+  <div class="flex justify-center mb-6 mt-12 text-6xl font-bold">
+    <h1>Latest Posts</h1>
+  </div>
+
+  <% if (posts.length > 0) { %>
+  <div class="grid-cols-1 mb-5 sm:grid md:grid-cols-3">
+    <% posts.forEach(post => { %>
+    <div
+      class="mx-3 mt-6 flex flex-col border-1 border-gray-600 rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0"
+    >
+      <a href="/post/<%= post.id %>">
+        <img
+          class="rounded-t-lg"
+          src="<%= post.imageUrl %>"
+          alt="Hollywood Sign on The Hill"
+        />
+      </a>
+      <div class="p-6">
+        <a href="/post/<%= post.id %>">
+          <h5
+            class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50"
+          >
+            <%= post.title %>
+          </h5>
+        </a>
+        <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+          <%= post.content %>
+        </p>
+        <p
+          dir="rtl"
+          class="mb-4 text-base flex justify-end text-neutral-600 dark:text-neutral-200"
+        >
+          <%- post.createdAt.toLocaleString("ar-LY") %>
+        </p>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <% } else { %>
+  <div class="mx-auto max-w-screen-xl">
+    <div class="mx-auto max-w-screen-sm text-center">
+      <p class="flex justify-center mt-24 text-6xl font-bold dark:text-white">
+        No Posts Found!
+      </p>
+    </div>
+  </div>
+  <% } %> <% if (nextPage !== null) { %>
+
+  <nav aria-label="Page navigation">
+    <ul class="list-style-none flex">
+      <li>
+        <a
+          class="relative block rounded bg-transparent px-3 py-4 text-sm text-gray-600 transition-all hover:text-black duration-300 dark:text-neutral-400"
+          href="/?page=<%= nextPage %>"
+          >< View Older Posts</a
+        >
+      </li>
+    </ul>
+  </nav>
+  <% } %>
+</section>
+<!-- Section: Design Block -->

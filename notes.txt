@@ -1,0 +1,15 @@
+Ayman Muhammad Abubaker
+==================
+Teminal commandline :-
+npm run dev
+==================
+
+Database name: BlogDb
+Tables name: 
+    users
+    posts
+
+
+
+
+
