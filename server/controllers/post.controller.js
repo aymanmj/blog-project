@@ -74,7 +74,7 @@ async function getAddPost(req, res, next) {
 
 async function AddPost(req, res, next) {
   try {
-    const { title, content } = req.body;
+    const { title, content, imageUrl } = req.body;
     const userid = parseInt(req.userId);
     try {
       const post = await prisma.post.create({
@@ -82,7 +82,7 @@ async function AddPost(req, res, next) {
           title: title,
           content: content,
           authorId: userid,
-          imageUrl: "https://mdbcdn.b-cdn.net/img/new/standard/city/018.jpg",
+          imageUrl: imageUrl,
         },
       });
       res.redirect("/dashboard");
@@ -126,6 +126,7 @@ async function postEditPost(req, res, next) {
       where: { id: parseInt(editpost.postId) },
       data: {
         title: editpost.title,
+        imageUrl: editpost.imageUrl,
         content: editpost.content,
       },
     });

@@ -41,3 +41,12 @@ model Session {
   data      String
   expiresAt   DateTime
 }
+
+// will add Profile model in the future
+
+// model Profile {
+//   id     Int    @id @default(autoincrement())
+//   userBio    String
+//   user   User   @relation(fields: [userId], references: [id])
+//   userId Int    @unique
+// }
