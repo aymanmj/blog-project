@@ -4,11 +4,19 @@ const { PrismaClient } = require("@prisma/client");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
+const flash = require("connect-flash");
 
 const cors = require("cors");
 const homeRouter = require("./server/routes/home.route");
 const userRouter = require("./server/routes/user.route");
 const errorController = require("./server/controllers/error.controller");
+
+const prisma = new PrismaClient();
+const store = new PrismaSessionStore(new PrismaClient(), {
+  checkPeriod: 2 * 60 * 1000, //ms
+  dbRecordIdIsSessionId: true,
+  dbRecordIdFunction: undefined,
+});
 
 const app = express();
 
@@ -28,25 +36,36 @@ app.use(
   session({
     secret: "yoursecret starts here",
     resave: false,
-    saveUninitialized: true,
-    store: new PrismaSessionStore(new PrismaClient(), {
-      checkPeriod: 2 * 60 * 1000, //ms
-      dbRecordIdIsSessionId: true,
-      dbRecordIdFunction: undefined,
-    }),
-    cookie: {
-      secure: false,
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours,
-    },
+    saveUninitialized: false,
+    store: store,
   })
 );
 
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-  res.locals.user = req.cookies.token;
-  next();
+  if (!req.session.user) return next();
+  prisma.User.findUnique({
+    where: { id: req.session.user.id },
+  })
+    .then((user) => {
+      req.user = user;
+      // console.log("user: ", req.user);
+      res.locals.isLoggedIn = req.session.isLoggedIn;
+      next();
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 });
+
+// app.use((req, res, next) => {
+//   res.locals.isLoggedIn = req.session.isLoggedIn;
+//   res.locals.user = req.session.user;
+//   next();
+// });
+
+app.use(flash());
 
 app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");

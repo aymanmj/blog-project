@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const errorController = require("./error.controller");
+const flash = require("connect-flash");
 
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -32,19 +33,30 @@ async function userLogin(req, res, next) {
     });
 
     if (!user) {
-      return res.status(401).json({ messsage: "Invalid username or password" });
+      req.flash("error", "Invalid username or password");
+      return res.redirect("/login");
+      //return res.status(401).json({ messsage: "Invalid username or password" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ messsage: "Invalid username or password" });
+      req.flash("error", "Invalid username or password");
+      return res.redirect("/login");
     }
 
     const token = jwt.sign({ userId: user.id }, jwtSecret);
     res.cookie("token", token, { httpOnly: true });
-    req.session.user = true;
-    res.redirect("/dashboard");
-  } catch (error) {}
+    req.session.isLoggedIn = true;
+    req.session.user = user;
+    return req.session.save((err) => {
+      console.log("session error: ", err);
+      res.redirect("/admin/dashboard");
+    });
+    //console.log(req.session.user);
+    //return res.redirect("/admin/dashboard");
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function AddUser(req, res, next) {
@@ -60,24 +72,37 @@ async function AddUser(req, res, next) {
           password: hashedPassword,
         },
       });
-      res.status(201).json({ messsage: "User created", user });
+      req.flash(
+        "success",
+        "Congratulations, your account has been successfully created"
+      );
+      return res.redirect("/registration-success");
+      //return res.redirect("/login");
+      //res.status(201).json({ messsage: "User created", user });
     } catch (error) {
       if (error.code === "P2002") {
         console.log(error);
-        return res.status(409).json({ messsage: "User already exists" });
+        req.flash("error", "User already exists");
+        return res.redirect("/signup");
+        //return res.status(409).json({ messsage: "User already exists" });
       }
-      res.status(500).json({ messsage: "Internal server error" });
-      console.log(error);
+      req.flash("serverError", "Internal server error");
+      return res.redirect("/signup");
+      // res.status(500).json({ messsage: "Internal server error" });
+      //console.log(error);
     }
   } catch (error) {
-    console.log(error);
+    console.log("userLogin: ", error.message);
   }
 }
 
 async function userLogout(req, res, next) {
   try {
-    req.session.user = false;
-    req.session.destroy();
+    req.session.isLoggedIn = false;
+    req.user = false;
+    req.session.destroy((err) => {
+      console.log(err);
+    });
     res.clearCookie("token");
     res.redirect("/");
   } catch (error) {

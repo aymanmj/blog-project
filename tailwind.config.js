@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./views/**/*.{html,js,ejs}"],
+  content: ["./views/**/*.{html,js,ejs}", "./node_modules/flowbite/**/*.js"],
   theme: {
     extend: {
       colors: {
@@ -60,6 +60,8 @@ module.exports = {
   plugins: [
     require("daisyui"),
     require("@tailwindcss/typography"),
+    require("@tailwindcss/line-clamp"),
+    require("flowbite/plugin"),
     require("flowbite-typography"),
   ],
 };

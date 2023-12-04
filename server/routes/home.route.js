@@ -6,31 +6,31 @@ const postController = require("../controllers/post.controller");
 homeRouter.get("/", postController.getIndex);
 
 homeRouter.get(
-  "/add-post",
+  "/admin/add-post",
   userController.authMiddleware,
   postController.getAddPost
 );
 
 homeRouter.post(
-  "/add-post",
+  "/admin/add-post",
   userController.authMiddleware,
   postController.AddPost
 );
 
 homeRouter.get(
-  "/edit-post/:id",
+  "/admin/edit-post/:id",
   userController.authMiddleware,
   postController.getEditPost
 );
 
 homeRouter.post(
-  "/edit-post",
+  "/admin/edit-post",
   userController.authMiddleware,
   postController.postEditPost
 );
 
 homeRouter.post(
-  "/delete-post",
+  "/admin/delete-post",
   userController.authMiddleware,
   postController.deletePost
 );

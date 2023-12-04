@@ -1,5 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const userController = require("../controllers/user.controller");
+const flash = require("connect-flash");
+
 const prisma = new PrismaClient();
 
 const adminLayout = "../views/layouts/admin";
@@ -7,7 +9,6 @@ const adminLayout = "../views/layouts/admin";
 // Home page
 async function getIndex(req, res, next) {
   try {
-    // res.locals.user = req.cookies.token;
     const perPage = 3;
     const page = parseInt(req.query.page) || 1;
     const skip = perPage * page - perPage;
@@ -46,8 +47,14 @@ async function getPost(req, res, next) {
       },
     });
 
+    const authorId = post.authorId;
+    const author = await prisma.User.findUnique({
+      where: { id: authorId },
+    });
+
     res.render("post", {
       post: post,
+      author: author,
       pageTitle: "Post Page",
     });
   } catch (error) {
@@ -58,6 +65,7 @@ async function getPost(req, res, next) {
 async function getAddPost(req, res, next) {
   try {
     const userid = parseInt(req.userId);
+
     const user = await prisma.User.findUnique({
       where: { id: userid },
     });
@@ -65,9 +73,12 @@ async function getAddPost(req, res, next) {
     res.render("admin/add-post", {
       user: user,
       pageTitle: "Add Post",
+      messages: req.flash(),
       layout: adminLayout,
     });
   } catch (error) {
+    // req.flash("serverError", "Internal server error");
+    // return res.redirect("/admin/add-post");
     console.log(error);
   }
 }
@@ -75,31 +86,38 @@ async function getAddPost(req, res, next) {
 async function AddPost(req, res, next) {
   try {
     const { title, content, imageUrl } = req.body;
-    const userid = parseInt(req.userId);
+    //const userid = parseInt(req.userId);
+    const user = req.user;
     try {
       const post = await prisma.post.create({
         data: {
           title: title,
           content: content,
-          authorId: userid,
+          authorId: user.id,
           imageUrl: imageUrl,
         },
       });
-      res.redirect("/dashboard");
+
+      res.redirect("/admin/dashboard");
     } catch (error) {
-      console.log(error);
-      res.status(500).json({ messsage: "Internal server error" });
+      req.flash("serverError", "Internal server error addpost");
+      return res.redirect("/admin/add-post");
+      //console.log(error);
+      //res.status(500).json({ messsage: "Internal server error" });
     }
   } catch (error) {
-    console.log(error);
+    req.flash("serverError", "Internal server error");
+    return res.redirect("/admin/add-post");
+    //console.log(error);
   }
 }
 
 async function getEditPost(req, res, next) {
   try {
-    const userid = parseInt(req.userId);
+    //const userid = parseInt(req.userId);
+    const edituser = req.user;
     const user = await prisma.User.findUnique({
-      where: { id: userid },
+      where: { id: edituser.id },
     });
     const postId = parseInt(req.params.id);
     const post = await prisma.Post.findUnique({
@@ -119,7 +137,7 @@ async function getEditPost(req, res, next) {
 
 async function postEditPost(req, res, next) {
   try {
-    const userid = parseInt(req.userId);
+    const userid = parseInt(req.user.id);
     const editpost = req.body;
 
     await prisma.Post.update({
@@ -131,7 +149,7 @@ async function postEditPost(req, res, next) {
       },
     });
 
-    res.redirect("/dashboard");
+    res.redirect("/admin/dashboard");
     // const user = await prisma.User.findUnique({
     //   where: { id: userid },
     // });
@@ -153,25 +171,26 @@ async function postEditPost(req, res, next) {
 
 async function getUserPosts(req, res, next) {
   try {
-    const userid = parseInt(req.userId);
-    const user = await prisma.User.findUnique({
-      where: { id: userid },
-    });
-
-    const posts = await prisma.post.findMany({
+    const user = req.user;
+    const posts = await prisma.Post.findMany({
       where: {
-        authorId: userid,
+        authorId: user.id,
         postStatus: true,
       },
     });
-
-    res.render("admin/dashboard", {
+    return res.render("admin/dashboard", {
       posts: posts,
       user: user,
       pageTitle: "Admin Page",
+      // messages: req.flash(),
       layout: adminLayout,
     });
+
+    // req.flash("serverError", "Internal server error getuerspost");
+    // return res.redirect("/admin/dashboard");
   } catch (error) {
+    //req.flash("serverError", "Internal server error");
+    //res.redirect("/admin/dashboard");
     console.log(error);
   }
 }
@@ -179,14 +198,13 @@ async function getUserPosts(req, res, next) {
 async function deletePost(req, res, next) {
   try {
     const postId = parseInt(req.body.postId);
-    console.log(postId);
     await prisma.Post.update({
       where: { id: postId },
       data: {
         postStatus: false,
       },
     });
-    res.redirect("/dashboard");
+    res.redirect("/admin/dashboard");
   } catch (error) {
     console.log(error);
   }

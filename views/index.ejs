@@ -50,7 +50,7 @@
     >
       <a href="/post/<%= post.id %>">
         <img
-          class="rounded-t-lg"
+          class="rounded-t-lg h-60"
           src="<%= post.imageUrl %>"
           alt="Hollywood Sign on The Hill"
         />
@@ -63,15 +63,22 @@
             <%= post.title %>
           </h5>
         </a>
-        <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+        <p
+          class="line-clamp-3 mb-4 text-base text-neutral-600 dark:text-neutral-200"
+        >
           <%= post.content %>
         </p>
         <p
-          dir="rtl"
-          class="mb-4 text-base flex justify-end text-neutral-600 dark:text-neutral-200"
+          class="mb-2 text-base text-left text-neutral-600 dark:text-neutral-200"
         >
-          <%- post.createdAt.toDateString() %>
+          <span class="font-medium">Published: </span> <%-
+          post.createdAt.toDateString() %>
         </p>
+        <div class="text-right">
+          <a href="/post/<%= post.id %>" class="text-blue-600 items-end"
+            >read more</a
+          >
+        </div>
       </div>
     </div>
     <% }) %>

@@ -35,10 +35,11 @@ model Post {
      @@map("posts")
 }
 
+// back again to store session data
 model Session {
   id        String   @id
   sid       String   @unique
-  data      String
+  data      String @db.MediumText
   expiresAt   DateTime
 }
 

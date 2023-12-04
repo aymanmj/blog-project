@@ -1,9 +1,10 @@
 <!-- Index Post -->
 <div class="container max-w-7xl mx-auto mt-4">
   <div class="mb-12 text-left text-2xl font-bold">
-    <% if (user !== null) { %> User: <%= user.fullname %> <% } else { %> No user
-    <% } %>
+    <% if (isLoggedIn === true) { %> User: <%= user.fullname %> <% } else { %>
+    No user <% } %>
   </div>
+  <!--  -->
   <div class="mb-4">
     <h1
       class="font-serif text-center text-3xl font-bold underline decoration-gray-400"
@@ -12,7 +13,7 @@
     </h1>
     <div class="flex justify-end">
       <a
-        href="/add-post"
+        href="/admin/add-post"
         class="px-4 py-2 font-medium rounded-md bg-blue-500 text-blue-50 hover:bg-blue-600"
       >
         Add Post
@@ -27,13 +28,13 @@
         <table class="min-w-full">
           <thead>
             <tr>
-              <th
+              <!-- <th
                 class="px-6 py-3 text-sm font-medium leading-4 tracking-wider text-center text-gray-500 uppercase border-b border-gray-200 bg-gray-100"
               >
                 ID
-              </th>
+              </th> -->
               <th
-                class="px-6 py-3 text-sm font-medium leading-4 tracking-wider text-center text-gray-500 uppercase border-b border-gray-200 bg-gray-100"
+                class="px-6 w-80 py-3 text-sm font-medium leading-4 tracking-wider text-center text-gray-500 uppercase border-b border-gray-200 bg-gray-100"
               >
                 Title
               </th>
@@ -59,22 +60,20 @@
 
           <tbody class="bg-white">
             <tr>
-              <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+              <!-- <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                 <div class="flex items-center"><%= post.id %></div>
+              </td> -->
+
+              <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                <p class="line-clamp-2"><%= post.title %></p>
               </td>
 
               <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                <div class="text-sm leading-5 text-gray-900">
-                  <%= post.title %>
-                </div>
-              </td>
-
-              <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                <p><%= post.content %></p>
+                <p class="line-clamp-2"><%= post.content %></p>
               </td>
 
               <td
-                class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200"
+                class="px-6 py-4 text-sm text-center leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200"
               >
                 <span><%= post.createdAt.toDateString() %></span>
               </td>
@@ -83,7 +82,7 @@
                 class="text-sm font-medium leading-5 text-center whitespace-no-wrap border-b border-gray-200"
               >
                 <a
-                  href="/edit-post/<%= post.id %>"
+                  href="/admin/edit-post/<%= post.id %>"
                   class="tooltip tooltip-warning text-indigo-600 hover:text-indigo-900"
                   data-tip="edit post"
                 >
@@ -139,7 +138,7 @@
               <td
                 class="text-sm font-medium leading-5 whitespace-no-wrap border-b border-gray-200"
               >
-                <form action="/delete-post" method="POST">
+                <form action="/admin/delete-post" method="POST">
                   <input type="hidden" value="<%= post.id %>" name="postId" />
                   <button
                     type="submit"
