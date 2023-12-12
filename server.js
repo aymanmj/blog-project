@@ -43,6 +43,8 @@ app.use(
 
 app.use(cookieParser());
 
+app.use(flash());
+
 app.use((req, res, next) => {
   if (!req.session.user) return next();
   prisma.User.findUnique({

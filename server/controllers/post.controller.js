@@ -41,14 +41,14 @@ async function getIndex(req, res, next) {
 async function getPost(req, res, next) {
   try {
     const postId = parseInt(req.params.id);
-    const post = await prisma.post.findFirst({
+    const post = await prisma.post.findUnique({
       where: {
         id: postId,
       },
     });
 
     const authorId = post.authorId;
-    const author = await prisma.User.findUnique({
+    const author = await prisma.user.findUnique({
       where: { id: authorId },
     });
 
@@ -66,7 +66,7 @@ async function getAddPost(req, res, next) {
   try {
     const userid = parseInt(req.userId);
 
-    const user = await prisma.User.findUnique({
+    const user = await prisma.user.findUnique({
       where: { id: userid },
     });
 
@@ -116,11 +116,11 @@ async function getEditPost(req, res, next) {
   try {
     //const userid = parseInt(req.userId);
     const edituser = req.user;
-    const user = await prisma.User.findUnique({
+    const user = await prisma.user.findUnique({
       where: { id: edituser.id },
     });
     const postId = parseInt(req.params.id);
-    const post = await prisma.Post.findUnique({
+    const post = await prisma.post.findUnique({
       where: { id: postId },
     });
 
@@ -140,7 +140,17 @@ async function postEditPost(req, res, next) {
     const userid = parseInt(req.user.id);
     const editpost = req.body;
 
-    await prisma.Post.update({
+    const userPost = await prisma.post.findFirst({
+      where: {
+        authorId: userid,
+      },
+    });
+
+    if (!userPost) {
+      return res.redirect("/");
+    }
+
+    await prisma.post.update({
       where: { id: parseInt(editpost.postId) },
       data: {
         title: editpost.title,
@@ -172,7 +182,7 @@ async function postEditPost(req, res, next) {
 async function getUserPosts(req, res, next) {
   try {
     const user = req.user;
-    const posts = await prisma.Post.findMany({
+    const posts = await prisma.post.findMany({
       where: {
         authorId: user.id,
         postStatus: true,
@@ -198,8 +208,8 @@ async function getUserPosts(req, res, next) {
 async function deletePost(req, res, next) {
   try {
     const postId = parseInt(req.body.postId);
-    await prisma.Post.update({
-      where: { id: postId },
+    await prisma.post.update({
+      where: { id: postId, authorId: req.user.id },
       data: {
         postStatus: false,
       },
