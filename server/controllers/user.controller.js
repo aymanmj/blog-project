@@ -211,7 +211,7 @@ async function postPasswordReset(req, res, next) {
             },
           })
           .then((updateUser) => {
-            console.log(updateUser);
+            console.log("user updated: ", updateUser.fullname);
           })
           .catch((err) => {
             console.log(err);
@@ -225,16 +225,16 @@ async function postPasswordReset(req, res, next) {
           //text: "Your account has been successfully created",
           html: `
           <strong>You requested reset password</strong>
-          <p>click this link <a href="http://localhost:4000/reset/${token}">link</a> to set a new password for your account</p>
+          <p>click this <a href="http://3.14.147.81:5000/reset/${token}">link</a> to set a new password for your account</p>
           `,
         };
-        res.redirect("/");
         try {
           await sendgridMail.send(msg);
           console.log("Reset email sent successfully!");
         } catch (error) {
           console.error(error);
         }
+        res.redirect("/");
       })
       .catch((error) => {
         console.log(error);
