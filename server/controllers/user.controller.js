@@ -132,8 +132,8 @@ async function postAddUser(req, res, next) {
 
       res.redirect("/registration-success");
       const msg = {
-        to: email, // Change to your recipient
         from: "info@ayman.ly", // Change to your verified sender
+        to: email, // Change to your recipient
         subject: "Signup succeeded!",
         //text: "Your account has been successfully created",
         html: "<h1>Your account has been successfully created</h1>",
@@ -225,7 +225,7 @@ async function postPasswordReset(req, res, next) {
           //text: "Your account has been successfully created",
           html: `
           <strong>You requested reset password</strong>
-          <p>click this <a href="http://3.14.147.81:5000/reset/${token}">link</a> to set a new password for your account</p>
+          <p>click this <a href="https://www.ayman.ly/reset/${token}">link</a> to set a new password for your account</p>
           `,
         };
         try {
